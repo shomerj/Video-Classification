@@ -1,6 +1,6 @@
 <h2>Readme</h2>
 
-<h2> Video Classification of Natural Human Movements </h2>
+<h2> Video Classification of Semi Natural Human Movements </h2>
 
 <h3>Overview</h3>
 
@@ -14,5 +14,3 @@ My interest in this problem came about when I was introduced to a new type of ca
 <h3>Data</h3>
 
 The data I am using for this project is the UCF101 - Action Recognition Data Set. The set contains around 13,000 videos with 101 categories. I will be using a subset of the categories to create my own 5 classifications. All the clips are from YouTube with a fixed frame rate of 25 FPS and a resolution of 320 X 240. I will be creating JPEG images from each frame and using the images over a predetermined timestamp to train my model.
-
- 
