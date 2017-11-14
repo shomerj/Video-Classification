@@ -6,6 +6,8 @@ Should only run this file once!
 """
 import os
 import os.path
+import shutil
+import ipdb
 
 def get_train_test_lists(version='01'):
     """
@@ -39,7 +41,7 @@ def move_files(file_groups):
     """
     # Do each of our groups.
     for group, videos in file_groups.items():
-
+        # ipdb.set_trace()
         # Do each of our videos.
         for video in videos:
 
@@ -55,45 +57,16 @@ def move_files(file_groups):
 
             # Check if we have already moved this file, or at least that it
             # exists to move.
-            if not os.path.exists(filename):
-                print("Can't find %s to move. Skipping." % (filename))
-                continue
+            # if not os.path.exists(filename):
+            #     print("Can't find %s to move. Skipping." % (filename))
+            #     continue
 
             # Move it.
             dest = group + '/' + classname + '/' + filename
             print("Moving %s to %s" % (filename, dest))
-            os.rename(filename, dest)
+            os.rename('UCF101/'+filename, dest)
 
     print("Done.")
-
-def rename_move_remove_files():
-    classification_dict = { 'throwing': ['BaseballPitch', 'HammerThrow','JavelinThrow', 'Shotput', 'ThrowDiscus'],
-                            'punching': ['BoxingPunchingBag', 'BoxingSpeedBag', 'Punch'],
-                            'jumping': ['HighJump', 'JumpingJack', 'JumpRope','LongJump', 'TrampolineJumping'],
-                            'pullups': ['PullUps'],
-                            'pushups': ['PushUps']
-                             }
-
-    for class_name in classification_dict.keys():
-        #making a directory for each class
-        if not os.path.exists(class_name):
-            os.makedirs(class_name)
-
-        for group in classification_dict[class_name]:
-                #getting a list of files in each group
-                filename = os.listdir(group)
-
-                    #moving files into final class directory
-                    for f in files:
-                        shutil.move(group+'/'+f, class_name)
-
-
-    #remove unecessary directories/files
-
-    for directory in os.listdir():
-        if (directory != classification_dict.keys() or directory.startwith('.') == False):
-            shutil.rmtree(directory)
-
 
 
 
@@ -107,8 +80,6 @@ def main():
 
     # Move the files.
     move_files(group_lists)
-
-    #create and move to final class directory
 
 if __name__ == '__main__':
     main()
