@@ -23,7 +23,6 @@ class ProcessData():
         self.y = None
         self.average = None
 
-
     def load_data(self):
         '''
         columns: train/test, label, sequence, nb_frames, dir_path
@@ -51,7 +50,7 @@ class ProcessData():
 
         return one_hot
 
-    def generate_images_in_memory(self, train_test, avg=False):
+    def generate_images_in_memory(self, train_test, avg=True):
         '''
         Grabs images from disk and loads them into memory.
         train/test = str of test or train
@@ -83,13 +82,15 @@ class ProcessData():
             y.append(self.one_hot_encode_label(row[1]))
 
         if avg == True:
-            average = np.array(average)
+            average = np.array(X)
             average = np.mean(average, axis=3)
 
 
         self.X = np.array(X)
         self.y = np.array(y)
         self.average = np.array(average)
+
+
 
 
     def train_test_split(self):
@@ -137,4 +138,4 @@ class ProcessData():
         return seq_array
 
     def get_input_shape(self):
-        self.input_shape = slef.X[0].shape
+        self.input_shape = self.X[0].shape
