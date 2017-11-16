@@ -44,6 +44,7 @@ def extract_images(fps=12):
 
     with open('image_file.csv', 'w') as f:
         write = csv.writer(f)
+        writer.writerow(('train_test', 'label', 'sequence', 'nb_frames', 'dir_path'))
         write.writerows(data_file)
 
 
