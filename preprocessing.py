@@ -9,5 +9,5 @@ def image_processing(img, size, as_BW=True):
     as_BW: True is picture is black and white
     '''
     img = io.imread(img, as_grey=as_BW)
-    resized = resize(img, size)
-    return resized
+    resized = resize(img, size, mode='constant')
+    return resized.reshape(160,160,1)
