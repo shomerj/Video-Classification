@@ -130,3 +130,6 @@ class ProcessData():
         for idx,img in enumerate(frames):
             seq_array[:,:,idx] = image_processing(img, self.image_shape, as_BW=BW)
         return seq_array
+
+    def get_input_shape(self):
+        return X[0].shape
