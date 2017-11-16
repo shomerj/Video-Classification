@@ -19,6 +19,9 @@ class ProcessData():
         self.squence_path = 'sequence/'
         self.data = self.load_data()
         self.labels = self.get_labels()
+        self.X = None
+        self.y = None
+        self.average = None
 
 
     def load_data(self):
@@ -84,7 +87,9 @@ class ProcessData():
             average = np.mean(average, axis=3)
 
 
-        return np.array(X), np.array(y), np.array(average)
+        self.X = np.array(X)
+        self.y = np.array(y)
+        self.average = np.array(average)
 
 
     def train_test_split(self):
@@ -132,4 +137,4 @@ class ProcessData():
         return seq_array
 
     def get_input_shape(self):
-        return X[0].shape
+        self.input_shape = slef.X[0].shape
