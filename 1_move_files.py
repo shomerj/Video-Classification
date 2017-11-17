@@ -83,13 +83,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-#OS Commands needed
-#os.rename(src, dst)
-
-#remove dir and content
-#shutil.rmtree()
-
-#move content of directory to directory
-#shutil.move

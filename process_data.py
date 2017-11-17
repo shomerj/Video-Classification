@@ -22,6 +22,7 @@ class ProcessData():
         self.X = None
         self.y = None
         self.average = None
+        self.input_shape = None
 
     def load_data(self):
         '''
@@ -89,6 +90,7 @@ class ProcessData():
         self.X = np.array(X)
         self.y = np.array(y)
         self.average = np.array(average)
+        self.input_shape = self.X[0].shape
 
 
 
@@ -132,10 +134,9 @@ class ProcessData():
 
     def build_seq_with_processing(self, frames, shape, BW):
         '''Frames is a list of paths to the frames of a given video'''
-        seq_array = np.zeros((shape[0], shape[1], self.seq_len))
-        for idx,img in enumerate(frames):
-            seq_array[:,:,idx] = image_processing(img, self.image_shape, as_BW=BW)
-        return seq_array
+        # seq_array = np.zeros((shape[0], shape[1], self.seq_len))
+        # for idx,img in enumerate(frames):
+        #     seq_array[:,:,idx] = image_processing(img, self.image_shape, as_BW=BW)
+        # return seq_array
 
-    def get_input_shape(self):
-        self.input_shape = self.X[0].shape
+        return [image_processing(img, self.image_shape, as_BW=BW) for img in frames]
