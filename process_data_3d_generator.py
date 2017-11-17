@@ -4,7 +4,7 @@ import glob
 import os
 from keras.utils import np_utils
 from preprocessing import image_processing
-# import ipdb
+import ipdb
 
 class ProcessData():
 
@@ -51,7 +51,7 @@ class ProcessData():
 
         return one_hot
 
-    def generate_images_in_memory(self, train_test, avg=True):
+    def generate_images_in_memory(self, train_test, batch_size, avg=True):
         '''
         Grabs images from disk and loads them into memory.
         train/test = str of test or train
@@ -66,31 +66,43 @@ class ProcessData():
             data = train
         else:
             data = test
-
-        X, y, average = [], [], []
-        for row in range(batch_size):
-
-            frames = self.grab_frame_sequence(row)
-
-            if len(frames) <= self.seq_len:
-                continue
+        # ipdb.set_trace()
+        while 1:
+            X, y, average = [], [], []
 
 
-            frames = self._create_sequence(frames, self.seq_len)
-            sequence = self.build_seq_with_processing(frames, self.image_shape, BW=True)
+            #grabbing random rows
+            indices = np.arange(len(data))
+            np.random.shuffle(indices)
+            for row in data.values[indices[:batch_size]]:
 
-            X.append(sequence)
-            y.append(self.one_hot_encode_label(row[1]))
-
-        # if avg == True:
-        #     average = np.array(X)
-        #     average = np.mean(average, axis=3)
+                frames = self.grab_frame_sequence(row)
 
 
-        self.X = np.array(X)
-        self.y = np.array(y)
-        self.average = np.array(average)
-        self.input_shape = self.X[0].shape
+
+                if len(frames) <= self.seq_len:
+                    continue
+
+
+                frames = self._create_sequence(frames, self.seq_len)
+                sequence = self.build_seq_with_processing(frames, self.image_shape, BW=True)
+
+                X.append(sequence)
+                y.append(self.one_hot_encode_label(row[1]))
+
+            np.delete(indices,indices[:batch_size])
+            # if avg == True:
+            #     average = np.array(X)
+            #     average = np.mean(average, axis=3)
+
+
+            self.X = np.array(X)
+            self.y = np.array(y)
+            self.average = np.array(average)
+            self.input_shape = X[0].shape
+            yield np.array(X), np.array(y)
+
+
 
 
 
