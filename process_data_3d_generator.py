@@ -28,7 +28,7 @@ class ProcessData():
         '''
         columns: train/test, label, sequence, nb_frames, dir_path
         '''
-        df = pd.read_csv('sample_data.csv')
+        df = pd.read_csv('image_file.csv')
         self.data = df
         return self.data
 
@@ -133,15 +133,7 @@ class ProcessData():
         skip = len(frames)//length
         frame_seq = [frames[i] for i in range(0, len(frames), skip)]
         return frame_seq[:length]
-        # else:
-        #     if len(frames) < 10+length:
-        #         return frames
-        #     elif len(frames) >= 10+length and len(frames) <= 2*length:
-        #         return [frames[i] for i in range(0, len(frames), 2)]
-        #     else:
-        #         skip = len(frames)//length
-        #         frame_seq = [frames[i] for i in range(0, len(frames), skip)]
-        #         return frame_seq[:length]
+
 
 
     def build_seq_with_processing(self, frames, shape, BW):
