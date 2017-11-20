@@ -2,26 +2,42 @@ from keras.models import Sequential
 from keras.layers.core import Dense, Dropout, Flatten
 from keras.layers.convolutional import Convolution3D, MaxPooling3D, ZeroPadding3D
 from keras.optimizers import SGD, Adam, RMSprop
-from process_data_3d_generator import ProcessData
+from keras.callbacks import EarlyStopping, ModelCheckpoint, CSVLogger, TensorBoard
+from keras.utils import plot_model
+import pydot
+import graphviz
+import h5py
 from cov3d import get_model
+from process_data_3d_generator import ProcessData
+from cn3d import cnn3d
 import ipdb
 
 
-def train_model(seq_len, img_size):
-    epoch = 10
+def train_model(seq_len, img_size, generator=False):
+    # ipdb.set_trace()
+    epoch = 10000
     batch = 32
     input_shape = (seq_len, 100, 100, 1)
+
+
     #getting data for both test and train
-    data_train = ProcessData(seq_len=seq_len, image_shape=img_size)
-    train_generator = data_train.generate_images_in_memory('train', batch, avg=False)
+    if generator==True:
+        data_train = ProcessData(seq_len=seq_len, image_shape=img_size)
+        train_generator = data_train.generator_images('train', batch, avg=False)
 
+        data_test = ProcessData(seq_len=seq_len, image_shape=img_size)
+        test_generator = data_test.generator_images('test', batch, avg=False)
+    else:
+        data_train = ProcessData(seq_len=seq_len, image_shape=img_size)
+        X, y, avg = data_train.generate_images_in_memory('train')
 
-    data_test = ProcessData(seq_len=seq_len, image_shape=img_size)
-    test_generator = data_test.generate_images_in_memory('test', batch, avg=False)
+        data_test = ProcessData(seq_len=seq_len, image_shape=img_size)
+        X_test, y_test, avg_test = data_test.generate_images_in_memory('test')
+    ipdb.set_trace()
 
     #loading the model
     labels = len(data_train.labels)
-    model = get_model(input_shape, labels)
+    model = cnn3d(input_shape, labels)
 
     metrics=['accuracy']
 
@@ -32,19 +48,37 @@ def train_model(seq_len, img_size):
     #figure out steps per epoch
     steps = len(data_train.data)//batch
 
-    model.fit_generator(
-                generator=train_generator,
-                steps_per_epoch=steps,
-                validation_data=test_generator,
-                validation_steps=10
-                verbose=1,
-                epochs=epoch)
+    #callbacks
+    earlystopping =  EarlyStopping(monitor='val_loss', patience=5)
+    modelcheckpoint = ModelCheckpoint(filepath='logs/checkpoing.hdf5', verbose=1, save_best_only=True)
+    csvlog = CSVLogger('logs/training.log')
+    tensorboard = TensorBoard(log_dir='logs/', histogram_freq=0)
+
+    if generator == True:
+        model.fit_generator(
+                    generator=train_generator,
+                    steps_per_epoch=steps,
+                    validation_data=test_generator,
+                    validation_steps=40,
+                    callbacks = [earlystopping, modelcheckpoint, csvlog, tensorboard],
+                    verbose=1,
+                    epochs=epoch)
+    # else:
+        # model.fit(
+        #     X,
+        #     y,
+        #     batch_size=batch,
+        #     validation_data=(X_test, y_test),
+        #     verbose=1,
+        #     callbacks=[tensorboard, earlystopping, csvlog],
+        #     epochs=epoch)
 
     print(model.summary())
+    # plot_model(model, to_file='model.png', show_shapes=False, show_layer_names=True)
 
 
 def main():
-    seq_len = 30
+    seq_len = 18
     image_size = (100,100)
     train_model(seq_len, image_size)
 

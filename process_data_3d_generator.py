@@ -5,10 +5,31 @@ import os
 from keras.utils import np_utils
 from preprocessing import image_processing
 import ipdb
+import threading
+
+
+
+class threadsafe_iterator:
+    def __init__(self, iterator):
+        self.iterator = iterator
+        self.lock = threading.Lock()
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        with self.lock:
+            return next(self.iterator)
+
+def threadsafe_generator(func):
+    """Decorator"""
+    def gen(*a, **kw):
+        return threadsafe_iterator(func(*a, **kw))
+    return gen
 
 class ProcessData():
 
-    def __init__(self, seq_len=30, image_shape=(160,160)):
+    def __init__(self, seq_len=16, image_shape=(100,100)):
         '''
         seq_len: the max length of a sequence of images in consideration
         image_shape: the target scaled image
@@ -28,7 +49,7 @@ class ProcessData():
         '''
         columns: train/test, label, sequence, nb_frames, dir_path
         '''
-        df = pd.read_csv('image_file.csv')
+        df = pd.read_csv('sample_data.csv')
         self.data = df
         return self.data
 
@@ -51,7 +72,8 @@ class ProcessData():
 
         return one_hot
 
-    def generate_images_in_memory(self, train_test, batch_size, avg=True):
+    @threadsafe_generator
+    def generator_images(self, train_test, batch_size, avg=True):
         '''
         Grabs images from disk and loads them into memory.
         train/test = str of test or train
@@ -66,19 +88,17 @@ class ProcessData():
             data = train
         else:
             data = test
-        # ipdb.set_trace()
+        # indices = np.arange(len(data))
+        # np.random.shuffle(indices)
+
         while 1:
             X, y, average = [], [], []
-
-
-            #grabbing random rows
             indices = np.arange(len(data))
             np.random.shuffle(indices)
+            # ipdb.set_trace()
             for row in data.values[indices[:batch_size]]:
 
                 frames = self.grab_frame_sequence(row)
-
-
 
                 if len(frames) <= self.seq_len:
                     continue
@@ -89,23 +109,50 @@ class ProcessData():
 
                 X.append(sequence)
                 y.append(self.one_hot_encode_label(row[1]))
+                indices = indices[batch_size:]
 
-            np.delete(indices,indices[:batch_size])
-            # if avg == True:
-            #     average = np.array(X)
-            #     average = np.mean(average, axis=3)
-
-
-            self.X = np.array(X)
-            self.y = np.array(y)
             self.average = np.array(average)
-            self.input_shape = X[0].shape
-            yield np.array(X), np.array(y)
+            X = np.array(X)
+            yield X, np.array(y)
+
+    def generate_images_in_memory(self, train_test, avg=False):
+        '''
+     Grabs images from disk and loads them into memory.
+     train/test = str of test or train
+
+     return: X = np.array of list of sequence of images
+           y = np.array of labels
+         '''
+
+        test, train = self.train_test_split()
+
+         #specifiying train or test set
+        if train_test == 'train':
+            data = train
+        else:
+            data = test
+
+        X, y, average = [], [], []
+        for row in data.values:
+
+            frames = self.grab_frame_sequence(row)
+
+            if len(frames) <= self.seq_len:
+                continue
 
 
+            frames = self._create_sequence(frames, self.seq_len)
+            sequence = self.build_seq_with_processing(frames, self.image_shape, BW=True)
+
+            X.append(sequence)
+            y.append(self.one_hot_encode_label(row[1]))
+
+        if avg == True:
+            average = np.array(average)
+            average = np.mean(average, axis=3)
 
 
-
+        return (np.array(X), np.array(y), np.array(average))
 
     def train_test_split(self):
         '''returns two dataframes: test and train
