@@ -8,47 +8,47 @@ def get_model(input_shape, classes):
     """
     model = Sequential()
     # 1st layer group
-    model.add(Conv3D(64, (3, 3, 1), activation='relu',
+    model.add(Conv3D(64, (3, 3, 3), activation='relu',
                      padding='same', name='conv1',
                      strides=(1, 1, 1),
                      input_shape=input_shape))
-    model.add(MaxPooling3D(pool_size=(1, 2, 1), strides=(1, 2, 1),
+    model.add(MaxPooling3D(pool_size=(1, 2, 2), strides=(1,2,2),
                            padding='valid', name='pool1'))
     # 2nd layer group
-    model.add(Conv3D(128, (3, 3, 1), activation='relu',
+    model.add(Conv3D(128, (3, 3, 3), activation='relu',
                      padding='same', name='conv2',
                      strides=(1, 1, 1)))
-    model.add(MaxPooling3D(pool_size=(2, 2, 1), strides=(2, 2, 1),
+    model.add(MaxPooling3D(pool_size=(2, 2, 2), strides=(2, 2, 2),
                            padding='valid', name='pool2'))
     # 3rd layer group
-    model.add(Conv3D(256, (3, 3, 1), activation='relu',
+    model.add(Conv3D(256, (3, 3, 3), activation='relu',
                      padding='same', name='conv3a',
                      strides=(1, 1, 1)))
-    model.add(Conv3D(256, (3, 3, 1), activation='relu',
+    model.add(Conv3D(256, (3, 3, 3), activation='relu',
                      padding='same', name='conv3b',
                      strides=(1, 1, 1)))
-    model.add(MaxPooling3D(pool_size=(3, 3, 1), strides=(2, 2, 1),
+    model.add(MaxPooling3D(pool_size=(2, 2, 2), strides=(2,2,2),
                            padding='valid', name='pool3'))
-    # 4th layer group
-    # model.add(Conv3D(512, (3, 3, 1), activation='relu',
-    #                  padding='same', name='conv4a',
-    #                  strides=(1, 1, 1)))
-    # model.add(Conv3D(512, (3, 3, 1), activation='relu',
-    #                  padding='same', name='conv4b',
-    #                  strides=(1, 1, 1)))
-    # model.add(MaxPooling3D(pool_size=(2, 2, 1), strides=(2, 2, 1),
-    #                        padding='valid', name='pool4'))
+    # # 4th layer group
+    model.add(Conv3D(512, (3, 3, 3), activation='relu',
+                     padding='same', name='conv4a',
+                     strides=(1, 1, 1)))
+    model.add(Conv3D(512, (3, 3, 3), activation='relu',
+                     padding='same', name='conv4b',
+                     strides=(1, 1, 1)))
+    model.add(MaxPooling3D(pool_size=(2, 2, 2), strides=(2, 2, 2),
+                           padding='valid', name='pool3.5'))
 
     # 5th layer group
-    # model.add(Conv3D(512, (3, 3, 1), activation='relu',
-    #                  padding='same', name='conv5a',
-    #                  strides=(1, 1, 1)))
-    # model.add(Conv3D(512, (3, 3, 1), activation='relu',
-    #                  padding='same', name='conv5b',
-    #                  strides=(1, 1, 1)))
-    model.add(ZeroPadding3D(padding=(0, 1, 1)))
-    model.add(MaxPooling3D(pool_size=(4, 4, 1), strides=(2, 2, 1),
-                           padding='valid', name='pool5'))
+    model.add(Conv3D(512, (3, 3, 3), activation='relu',
+                     padding='same', name='conv5a',
+                     strides=(1, 1, 1)))
+    model.add(Conv3D(512, (3, 3, 3), activation='relu',
+                     padding='same', name='conv5b',
+                     strides=(1, 1, 1)))
+    model.add(ZeroPadding3D(padding=((0, 0), (0, 1), (0, 1))))
+    model.add(MaxPooling3D(pool_size=(2, 2, 2), strides=(2, 2, 2),
+                           padding='valid', name='pool4'))
     model.add(Flatten())
 
     # FC layers group
