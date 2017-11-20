@@ -13,10 +13,10 @@ from cn3d import cnn3d
 import ipdb
 
 
-def train_model(seq_len, img_size, generator=False):
+def train_model(seq_len, img_size, generator=True):
     # ipdb.set_trace()
     epoch = 10000
-    batch = 32
+    batch = 30
     input_shape = (seq_len, 100, 100, 1)
 
 
@@ -45,12 +45,12 @@ def train_model(seq_len, img_size, generator=False):
     model.compile(loss='categorical_crossentropy', optimizer=optimizer,
                            metrics=metrics)
 
-    #figure out steps per epoch
-    steps = len(data_train.data)//batch
+    #figure out steps per epoch. 0.6 is roughly the amount of train data
+    steps = (len(data_train.data)*0.6)//batch
 
     #callbacks
     earlystopping =  EarlyStopping(monitor='val_loss', patience=5)
-    modelcheckpoint = ModelCheckpoint(filepath='logs/checkpoing.hdf5', verbose=1, save_best_only=True)
+    modelcheckpoint = ModelCheckpoint(filepath='logs/checkpoing.hdf5', verbose=1, save_best_only=True, period=4)
     csvlog = CSVLogger('logs/training.log')
     tensorboard = TensorBoard(log_dir='logs/', histogram_freq=0)
 
@@ -74,12 +74,12 @@ def train_model(seq_len, img_size, generator=False):
             epochs=epoch)
 
     # print(model.summary())
-    score = model.evaluate(X_test, y_test, verbose=0)
-    print('Test score:', score[0])
-    print('Test accuracy:', score[1])
+    # score = model.evaluate(X_test, y_test, verbose=0)
+    # print('Test score:', score[0])
+    # print('Test accuracy:', score[1])
 
 def main():
-    seq_len = 18
+    seq_len = 20
     image_size = (100,100)
     train_model(seq_len, image_size)
 

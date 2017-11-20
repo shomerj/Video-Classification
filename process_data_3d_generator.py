@@ -49,7 +49,7 @@ class ProcessData():
         '''
         columns: train/test, label, sequence, nb_frames, dir_path
         '''
-        df = pd.read_csv('sample_data.csv')
+        df = pd.read_csv('image_file.csv')
         self.data = df
         return self.data
 
@@ -93,11 +93,10 @@ class ProcessData():
 
         while 1:
             X, y, average = [], [], []
-            # indices = np.arange(len(data))
-            # np.random.shuffle(indices)
-            # ipdb.set_trace()
-            for row in data.values[indices[:batch_size]]:
 
+            for row in data.values[indices[:batch_size]]:
+                # ipdb.set_trace()
+                # print(indices)
                 frames = self.grab_frame_sequence(row)
 
                 if len(frames) <= self.seq_len:
@@ -107,13 +106,20 @@ class ProcessData():
                 frames = self._create_sequence(frames, self.seq_len)
                 sequence = self.build_seq_with_processing(frames, self.image_shape, BW=True)
 
-                X.append(sequence)
+                X.append(np.array(sequence))
                 y.append(self.one_hot_encode_label(row[1]))
+
+            if batch_size >= len(indices):
+                restart_indices = np.arange(len(data))
+                indices = np.concatenate((indices, restart_indices))
+            else:
                 indices = indices[batch_size:]
 
             self.average = np.array(average)
             X = np.array(X)
             yield X, np.array(y)
+
+
 
     def generate_images_in_memory(self, train_test, avg=False):
         '''
@@ -134,7 +140,7 @@ class ProcessData():
 
         X, y, average = [], [], []
         for row in data.values:
-
+            # ipdb.set_trace()
             frames = self.grab_frame_sequence(row)
 
             if len(frames) <= self.seq_len:
