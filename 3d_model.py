@@ -33,11 +33,11 @@ def train_model(seq_len, img_size, generator=False):
 
         data_test = ProcessData(seq_len=seq_len, image_shape=img_size)
         X_test, y_test, avg_test = data_test.generate_images_in_memory('test')
-    ipdb.set_trace()
+    # ipdb.set_trace()
 
     #loading the model
     labels = len(data_train.labels)
-    model = cnn3d(input_shape, labels)
+    model = get_model(input_shape, labels)
 
     metrics=['accuracy']
 
@@ -73,9 +73,10 @@ def train_model(seq_len, img_size, generator=False):
         #     callbacks=[tensorboard, earlystopping, csvlog],
         #     epochs=epoch)
 
-    print(model.summary())
-    # plot_model(model, to_file='model.png', show_shapes=False, show_layer_names=True)
-
+    # print(model.summary())
+    score = model.evaluate(X_test, Y_test, verbose=0)
+    print('Test score:', score[0])
+    print('Test accuracy:', score[1])
 
 def main():
     seq_len = 18
