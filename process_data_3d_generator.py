@@ -68,7 +68,7 @@ class ProcessData():
         encoded = label_list.index(label_str)
 
         one_hot = np_utils.to_categorical(encoded, len(self.labels))
-        one_hot = one_hot[0]
+        # one_hot = one_hot
 
         return one_hot
 
