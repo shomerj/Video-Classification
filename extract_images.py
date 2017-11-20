@@ -46,7 +46,7 @@ def extract_images(fps=12):
                 data_file.append([test_train, label, seq, nb_of_frames, directory_path])
                 seq+=1
 
-    with open('image_file.csv', 'w') as f:
+    with open('image_data.csv', 'w') as f:
         write = csv.writer(f)
         write.writerow(('train_test', 'label', 'sequence', 'nb_frames', 'dir_path'))
         write.writerows(data_file)
@@ -59,7 +59,7 @@ def get_frame_count(directory_path):
 
 
 def main():
-    extract_images(fps=15)
+    extract_images(fps=25)
 
 if __name__ == '__main__':
     main()

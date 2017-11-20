@@ -10,9 +10,9 @@ import shutil
 
 
 def rename_move_remove_files():
-    classification_dict = { 'throwing': ['BaseballPitch', 'HammerThrow','JavelinThrow'],
-                            'punching': ['BoxingPunchingBag', 'BoxingSpeedBag', 'Punch'],
-                            'jumping': ['HighJump', 'JumpingJack','LongJump', 'TrampolineJumping'],
+    classification_dict = { 'throwing': ['BaseballPitch','JavelinThrow'],
+                            'punching': ['BoxingPunchingBag', 'BoxingSpeedBag'],
+                            'jumping': ['HighJump', 'TrampolineJumping'],
                             'pull_ups': ['PullUps'],
                             'push_ups': ['PushUps']
                              }
@@ -37,9 +37,9 @@ def rename_move_remove_files():
     #remove unecessary directories/files
 
 def remove_files():
-    classification_dict = { 'throwing': ['BaseballPitch', 'HammerThrow','JavelinThrow', 'Shotput'],
-                            'punching': ['BoxingPunchingBag', 'BoxingSpeedBag', 'Punch'],
-                            'jumping': ['HighJump', 'JumpingJack','LongJump', 'TrampolineJumping'],
+    classification_dict = { 'throwing': ['BaseballPitch','JavelinThrow'],
+                            'punching': ['BoxingPunchingBag', 'BoxingSpeedBag'],
+                            'jumping': ['HighJump', 'TrampolineJumping'],
                             'pull_ups': ['PullUps'],
                             'push_ups': ['PushUps']
                              }

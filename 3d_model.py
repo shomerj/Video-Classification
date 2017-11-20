@@ -7,7 +7,7 @@ from keras.utils import plot_model
 import pydot
 import graphviz
 import h5py
-from cov3d import get_model
+from test_model_2 import get_model
 from process_data_3d_generator import ProcessData
 from cn3d import cnn3d
 import ipdb
@@ -41,10 +41,10 @@ def train_model(seq_len, img_size, generator=True):
 
     metrics=['accuracy']
 
-    optimizer = Adam(lr=1e-4, decay=1e-6)
+    optimizer = Adam(lr=.0001)
     model.compile(loss='categorical_crossentropy', optimizer=optimizer,
                            metrics=metrics)
-
+    print(model.summary())
     #figure out steps per epoch. 0.6 is roughly the amount of train data
     steps = (len(data_train.data)*0.6)//batch
 
@@ -73,13 +73,13 @@ def train_model(seq_len, img_size, generator=True):
             callbacks=[tensorboard, earlystopping, csvlog],
             epochs=epoch)
 
-    # print(model.summary())
+    print(model.summary())
     # score = model.evaluate(X_test, y_test, verbose=0)
     # print('Test score:', score[0])
     # print('Test accuracy:', score[1])
 
 def main():
-    seq_len = 20
+    seq_len = 40
     image_size = (100,100)
     train_model(seq_len, image_size)
 

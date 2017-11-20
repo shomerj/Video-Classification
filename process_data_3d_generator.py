@@ -4,7 +4,7 @@ import glob
 import os
 from keras.utils import np_utils
 from preprocessing import image_processing
-import ipdb
+# import ipdb
 import threading
 
 
@@ -29,7 +29,7 @@ def threadsafe_generator(func):
 
 class ProcessData():
 
-    def __init__(self, seq_len=16, image_shape=(100,100)):
+    def __init__(self, seq_len=40, image_shape=(100,100)):
         '''
         seq_len: the max length of a sequence of images in consideration
         image_shape: the target scaled image
