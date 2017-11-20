@@ -88,13 +88,13 @@ class ProcessData():
             data = train
         else:
             data = test
-        # indices = np.arange(len(data))
-        # np.random.shuffle(indices)
+        indices = np.arange(len(data))
+        np.random.shuffle(indices)
 
         while 1:
             X, y, average = [], [], []
-            indices = np.arange(len(data))
-            np.random.shuffle(indices)
+            # indices = np.arange(len(data))
+            # np.random.shuffle(indices)
             # ipdb.set_trace()
             for row in data.values[indices[:batch_size]]:
 
