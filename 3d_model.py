@@ -74,7 +74,7 @@ def train_model(seq_len, img_size, generator=False):
             epochs=epoch)
 
     # print(model.summary())
-    score = model.evaluate(X_test, Y_test, verbose=0)
+    score = model.evaluate(X_test, y_test, verbose=0)
     print('Test score:', score[0])
     print('Test accuracy:', score[1])
 
