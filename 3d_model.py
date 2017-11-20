@@ -63,15 +63,15 @@ def train_model(seq_len, img_size, generator=False):
                     callbacks = [earlystopping, modelcheckpoint, csvlog, tensorboard],
                     verbose=1,
                     epochs=epoch)
-    # else:
-        # model.fit(
-        #     X,
-        #     y,
-        #     batch_size=batch,
-        #     validation_data=(X_test, y_test),
-        #     verbose=1,
-        #     callbacks=[tensorboard, earlystopping, csvlog],
-        #     epochs=epoch)
+    else:
+        model.fit(
+            X,
+            y,
+            batch_size=batch,
+            validation_data=(X_test, y_test),
+            verbose=1,
+            callbacks=[tensorboard, earlystopping, csvlog],
+            epochs=epoch)
 
     # print(model.summary())
     score = model.evaluate(X_test, Y_test, verbose=0)
