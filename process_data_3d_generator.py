@@ -89,7 +89,7 @@ class ProcessData():
         else:
             data = test
         indices = np.arange(len(data))
-        np.random.shuffle(indices)
+
 
         while 1:
             X, y, average = [], [], []
@@ -138,9 +138,8 @@ class ProcessData():
         else:
             data = test
 
-        X, y, average = [], [], []
+        X, y = [], []
         for row in data.values:
-            # ipdb.set_trace()
             frames = self.grab_frame_sequence(row)
 
             if len(frames) <= self.seq_len:
@@ -150,15 +149,17 @@ class ProcessData():
             frames = self._create_sequence(frames, self.seq_len)
             sequence = self.build_seq_with_processing(frames, self.image_shape, BW=True)
 
-            X.append(sequence)
-            y.append(self.one_hot_encode_label(row[1]))
+            if avg == True:
+                sequence = np.array(sequence)
+                average = np.mean(sequence, axis=0)
+                X.append(average-sequence)
+                y.append(self.one_hot_encode_label(row[1]))
 
-        if avg == True:
-            average = np.array(average)
-            average = np.mean(average, axis=3)
+            else:
+                X.append(sequence)
+                y.append(self.one_hot_encode_label(row[1]))
 
-
-        return (np.array(X), np.array(y), np.array(average))
+        return np.array(X), np.array(y)
 
     def train_test_split(self):
         '''returns two dataframes: test and train
@@ -185,7 +186,7 @@ class ProcessData():
 
         skip = len(frames)//length
         frame_seq = [frames[i] for i in range(0, len(frames), skip)]
-        return frame_seq[:length]
+        return frame_seq[-length:]
 
 
 
