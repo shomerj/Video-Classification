@@ -49,7 +49,7 @@ class ProcessData():
         '''
         columns: train/test, label, sequence, nb_frames, dir_path
         '''
-        df = pd.read_csv('image_file.csv')
+        df = pd.read_csv('image_data.csv')
         self.data = df
         return self.data
 
