@@ -55,9 +55,9 @@ def train_model(model, seq_len, img_size, avg=True, generator=False):
 
     #callbacks
     earlystopping =  EarlyStopping(monitor='val_loss', patience=5)
-    modelcheckpoint = ModelCheckpoint(filepath='logs/checkpoing.hdf5', verbose=1, save_best_only=True, period=4)
-    csvlog = CSVLogger('logs/training.log')
-    tensorboard = TensorBoard(log_dir='logs/', histogram_freq=2)
+    modelcheckpoint = ModelCheckpoint(filepath='../logs/checkpoing.hdf5', verbose=1, save_best_only=True, period=4)
+    csvlog = CSVLogger('../logs/training.log')
+    tensorboard = TensorBoard(log_dir='../logs/', histogram_freq=2)
 
     if generator == True:
         md.model.fit_generator(
