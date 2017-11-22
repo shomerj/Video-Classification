@@ -5,7 +5,7 @@ from keras.optimizers import SGD, Adam, RMSprop
 from keras.callbacks import EarlyStopping, ModelCheckpoint, CSVLogger, TensorBoard
 from keras.utils import plot_model
 from sklearn.metrics import classification_report, confusion_matrix
-from models import Model
+from models import Models
 from process_data_3d_generator import ProcessData
 import ipdb
 
@@ -97,7 +97,7 @@ def main():
     '''
     seq_len = 25
     image_size = (227,227)
-    model, X_test, y_test = train_model(model='cnn_lstm', seq_len, image_size)
+    model, X_test, y_test = train_model('cnn_lstm', seq_len, image_size)
     scores(model,X_test, y_test)
 
 
