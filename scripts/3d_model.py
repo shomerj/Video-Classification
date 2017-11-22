@@ -13,7 +13,7 @@ import ipdb
 def train_model(model, seq_len, img_size, avg=True, generator=False):
     '''
     This script runs the model.
-    model: (str)
+    model: (str) model name
     seq_len: (int) the number of frames per sequence
     img_size: (tuple) size you want to scale image to
     avg: (bool) if you want to subtract the mean from each images
@@ -96,8 +96,8 @@ def main():
     model =[c3d, cnn_lstm]
     '''
     seq_len = 25
-    image_size = (227,227)
-    model, X_test, y_test = train_model('cnn_lstm', seq_len, image_size)
+    image_size = (100,100)
+    model, X_test, y_test = train_model('c3d', seq_len, image_size)
     scores(model,X_test, y_test)
 
 
