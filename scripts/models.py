@@ -45,12 +45,12 @@ class Models():
         model.add(TimeDistributed(Conv2D(256, (3,3),
             padding='same', activation='relu')))
         model.add(TimeDistributed(MaxPooling2D((2, 2), strides=(2, 2))))
-        #
-        # model.add(TimeDistributed(Conv2D(512, (3,3),
-        #     padding='same', activation='relu')))
-        # model.add(TimeDistributed(Conv2D(512, (3,3),
-        #     padding='same', activation='relu')))
-        # model.add(TimeDistributed(MaxPooling2D((2, 2), strides=(2, 2))))
+        
+        model.add(TimeDistributed(Conv2D(512, (3,3),
+            padding='same', activation='relu')))
+        model.add(TimeDistributed(Conv2D(512, (3,3),
+            padding='same', activation='relu')))
+        model.add(TimeDistributed(MaxPooling2D((2, 2), strides=(2, 2))))
 
         model.add(TimeDistributed(Flatten()))
 
