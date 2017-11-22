@@ -115,7 +115,7 @@ class ProcessData():
 
 
 
-    def generate_images_in_memory(self, train_test, avg=False):
+    def generate_images_in_memory(self, train_test, avg=False, BW=True):
         '''
      Grabs images from disk and loads them into memory.
      train/test = str of test or train

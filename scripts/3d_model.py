@@ -10,7 +10,7 @@ from process_data_3d_generator import ProcessData
 import ipdb
 
 
-def train_model(model, seq_len, img_size, avg=True, generator=False):
+def train_model(model, seq_len, img_size, avg=True, generator=False, BW=True):
     '''
     This script runs the model.
     model: (str) model name
@@ -34,10 +34,10 @@ def train_model(model, seq_len, img_size, avg=True, generator=False):
         test_generator = data_test.generator_images('test', batch, avg=False)
     else:
         data_train = ProcessData(seq_len=seq_len, image_shape=img_size)
-        X, y= data_train.generate_images_in_memory('train', avg=avg)
+        X, y= data_train.generate_images_in_memory('train', avg=avg, BW=True)
 
         data_test = ProcessData(seq_len=seq_len, image_shape=img_size)
-        X_test, y_test= data_test.generate_images_in_memory('test', avg=avg)
+        X_test, y_test= data_test.generate_images_in_memory('test', avg=avg, BW=True)
 
     #loading the model
     labels = len(data_train.labels)
@@ -97,7 +97,7 @@ def main():
     '''
     seq_len = 20
     image_size = (100,100)
-    model, X_test, y_test = train_model('c3d', seq_len, image_size)
+    model, X_test, y_test = train_model('c3d', seq_len, image_size, BW=True)
     scores(model,X_test, y_test)
 
 

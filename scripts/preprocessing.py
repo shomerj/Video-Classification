@@ -12,7 +12,7 @@ def image_processing(img, size, as_BW=True):
     '''
     # ipdb.set_trace()
     if as_BW ==True:
-        channel =1
+        channel=1
     else:
         channel=3
     img = io.imread(img, as_grey=as_BW)
