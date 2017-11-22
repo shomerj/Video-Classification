@@ -66,7 +66,7 @@ class ProcessData():
 
         return one_hot
 
-    @threadsafe_generator
+    # @threadsafe_generator
     # def generator_images(self, train_test, batch_size, avg=True):
     #     '''
     #     Grabs images from disk and loads them into memory.
