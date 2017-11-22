@@ -95,7 +95,7 @@ def main():
     '''
     model =[c3d, cnn_lstm]
     '''
-    seq_len = 25
+    seq_len = 20
     image_size = (100,100)
     model, X_test, y_test = train_model('c3d', seq_len, image_size)
     scores(model,X_test, y_test)
