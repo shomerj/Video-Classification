@@ -10,7 +10,7 @@ class Models():
 
     def __init__(self, model, label,  seq_len):
         self.classes = label
-        self.seq_len
+        self.seq_len = seq_len
 
         if model == "cnn_lstm":
             self.input_shape = (self.seq_len, 227,227,1)
@@ -45,7 +45,7 @@ class Models():
         model.add(TimeDistributed(Conv2D(256, (3,3),
             padding='same', activation='relu')))
         model.add(TimeDistributed(MaxPooling2D((2, 2), strides=(2, 2))))
-        # 
+        #
         # model.add(TimeDistributed(Conv2D(512, (3,3),
         #     padding='same', activation='relu')))
         # model.add(TimeDistributed(Conv2D(512, (3,3),
