@@ -22,7 +22,7 @@ def train_model(model, seq_len, img_size, avg=True, generator=False):
     '''
     epoch = 10000
     batch = 32
-    input_shape = (seq_len, img_size[0], img_size[1], 1)
+    
 
 
     #getting data for both test and train
