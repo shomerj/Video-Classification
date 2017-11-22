@@ -8,6 +8,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 from models import Models
 from process_data_3d_generator import ProcessData
 import ipdb
+import numpy as np
 
 
 def train_model(model, seq_len, img_size, avg=True, generator=False, BW=True):
