@@ -45,7 +45,7 @@ class Models():
         model.add(TimeDistributed(Conv2D(256, (3,3),
             padding='same', activation='relu')))
         model.add(TimeDistributed(MaxPooling2D((2, 2), strides=(2, 2))))
-        
+
         model.add(TimeDistributed(Conv2D(512, (3,3),
             padding='same', activation='relu')))
         model.add(TimeDistributed(Conv2D(512, (3,3),
@@ -70,7 +70,7 @@ class Models():
         model.add(Conv3D(64, (3, 3, 3), activation='relu',
                          padding='same', name='conv1',
                          strides=(1, 1, 1),
-                         input_shape=input_shape))
+                         input_shape=self.input_shape))
         model.add(MaxPooling3D(pool_size=(1, 2, 2), strides=(1,2,2),
                                padding='valid', name='pool1'))
         # 2nd layer group
