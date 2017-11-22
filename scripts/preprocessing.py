@@ -15,7 +15,6 @@ def image_processing(img, size, as_BW=True):
         channel =1
     else:
         channel=3
-    shape = (size[0], size[1], channel)
     img = io.imread(img, as_grey=as_BW)
     resized = resize(img, size, mode='constant')
-    return resized.reshape(shape).astype(np.float32)
+    return resized.reshape(size[0], size[1], channel).astype(np.float32)
