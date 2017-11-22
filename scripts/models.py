@@ -59,7 +59,7 @@ class Models():
         model.add(Dense(128))
         model.add(Dense(self.classes, activation='softmax'))
 
-        return self.model
+        return model
 
 
     def c3d(self):
@@ -97,4 +97,4 @@ class Models():
         model.add(Dropout(0.2))
         model.add(Dense(self.classes, activation='softmax'))
 
-        return self.model
+        return model
