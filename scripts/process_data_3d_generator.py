@@ -168,7 +168,7 @@ class ProcessData():
         sample: a row from train/test dataframe
         '''
         path = row[4]
-        frames = glob.glob(path+'/*')
+        frames = glob.glob('../'+path+'/*')
         return frames
 
 
