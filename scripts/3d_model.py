@@ -22,7 +22,7 @@ def train_model(model, seq_len, img_size, avg=True, generator=False):
     '''
     epoch = 10000
     batch = 32
-    
+
 
 
     #getting data for both test and train
@@ -34,7 +34,7 @@ def train_model(model, seq_len, img_size, avg=True, generator=False):
         test_generator = data_test.generator_images('test', batch, avg=False)
     else:
         data_train = ProcessData(seq_len=seq_len, image_shape=img_size)
-        X, y= data_train.generate_images_in_memory('train',avg=avg)
+        X, y= data_train.generate_images_in_memory('train', avg=avg)
 
         data_test = ProcessData(seq_len=seq_len, image_shape=img_size)
         X_test, y_test= data_test.generate_images_in_memory('test', avg=avg)
@@ -60,7 +60,7 @@ def train_model(model, seq_len, img_size, avg=True, generator=False):
     tensorboard = TensorBoard(log_dir='logs/', histogram_freq=2)
 
     if generator == True:
-        model.fit_generator(
+        md.model.fit_generator(
                     generator=train_generator,
                     steps_per_epoch=steps,
                     validation_data=test_generator,
@@ -69,7 +69,7 @@ def train_model(model, seq_len, img_size, avg=True, generator=False):
                     verbose=1,
                     epochs=epoch)
     else:
-        model.fit(
+        md.model.fit(
             X,
             y,
             batch_size=batch,
