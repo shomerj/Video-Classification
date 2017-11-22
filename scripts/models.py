@@ -14,10 +14,10 @@ class Models():
 
         if model == "cnn_lstm":
             self.input_shape = (self.seq_len, 227,227,1)
-            self.model = self.cnn_lstm
+            self.model = self.cnn_lstm()
         elif model == 'c3d':
             self.input_shape = (self.seq_len, 100,100,1)
-            self.model = self.c3d
+            self.model = self.c3d()
 
     def cnn_lstm(self):
         model = Sequential()
