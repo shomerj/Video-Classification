@@ -14,9 +14,17 @@ def scores(model, X_test, y_test):
     print("Accuracy: {}".format(accuracy_score(y_true, y_pred)))
     return (y_pred, classification_report(y_true, y_pred), accuracy_score(y_true, y_pred), recall_score(y_true, y_pred, average=None), precision_score(y_true, y_pred, average=None), f1_score(y_true, y_pred, average=None))
 
+def predict_class(model, X):
+    predict_probability = model.predict_proba(X)
+    predict_label = model.predict_classes(X)
+    return predict_probability, predict_label
+
+
+
 if __name__ == '__main__':
     test_data = ProcessData(25, (200,200))
     X_test, y_test = test_data.generate_images_in_memory('test', avg=False, BW=False)
-    model_lrcn = load_model('../logs/lrcn_model.h5')
-    y_pred, classification, accuracy, recall, precision, f1 = scores(model_lrcn, X_test, y_test)
-    np.savetxt("y_pred.csv", y_pred)
+    img = np.expand_dims(X_test[45], axis=0)
+    model_lrcn = load_model('../lrcn_model.h5')
+    # y_pred, classification, accuracy, recall, precision, f1 = scores(model_lrcn, X_test, y_test)
+    predict_proba, prediction = predict_class(model_lrcn, img)

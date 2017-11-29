@@ -4,27 +4,8 @@ import glob
 import os
 from keras.utils import np_utils
 from preprocessing import image_processing
-# import ipdb
 import threading
 
-
-class threadsafe_iterator:
-    def __init__(self, iterator):
-        self.iterator = iterator
-        self.lock = threading.Lock()
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        with self.lock:
-            return next(self.iterator)
-
-def threadsafe_generator(func):
-    """Decorator"""
-    def gen(*a, **kw):
-        return threadsafe_iterator(func(*a, **kw))
-    return gen
 
 class ProcessData():
 
@@ -62,60 +43,12 @@ class ProcessData():
         encoded = label_list.index(label_str)
 
         one_hot = np_utils.to_categorical(encoded, len(self.labels))
-        # one_hot = one_hot
 
         return one_hot
 
-    # @threadsafe_generator
-    # def generator_images(self, train_test, batch_size, avg=True):
-    #     '''
-    #     Grabs images from disk and loads them into memory.
-    #     train/test = str of test or train
-    #
-    #     return: X = np.array of list of sequence of images
-    #             y = np.array of labels
-    #     '''
-    #     test, train = self.train_test_split()
-    #
-    #     #specifiying train or test set
-    #     if train_test == 'train':
-    #         data = train
-    #     else:
-    #         data = test
-    #     indices = np.arange(len(data))
-    #
-    #
-    #     while 1:
-    #         X, y, average = [], [], []
-    #
-    #         for row in data.values[indices[:batch_size]]:
-    #             # ipdb.set_trace()
-    #             # print(indices)
-    #             frames = self.grab_frame_sequence(row)
-    #
-    #             if len(frames) <= self.seq_len:
-    #                 continue
-    #
-    #
-    #             frames = self._create_sequence(frames, self.seq_len)
-    #             sequence = self.build_seq_with_processing(frames, self.image_shape, BW=True)
-    #
-    #             X.append(np.array(sequence))
-    #             y.append(self.one_hot_encode_label(row[1]))
-    #
-    #         if batch_size >= len(indices):
-    #             restart_indices = np.arange(len(data))
-    #             indices = np.concatenate((indices, restart_indices))
-    #         else:
-    #             indices = indices[batch_size:]
-    #
-    #         self.average = np.array(average)
-    #         X = np.array(X)
-    #         yield X, np.array(y)
 
 
-
-    def generate_images_in_memory(self, train_test, avg=False, BW=True):
+    def generate_images_in_memory(self, train_test, avg=False, BW=False):
         '''
      Grabs images from disk and loads them into memory.
      train/test = str of test or train
@@ -141,7 +74,7 @@ class ProcessData():
 
 
             frames = self._create_sequence(frames, self.seq_len)
-            sequence = self.build_seq_with_processing(frames, self.image_shape, BW=True)
+            sequence = self.build_seq_with_processing(frames, self.image_shape, BW=BW)
 
             if avg == True:
                 sequence = np.array(sequence)
