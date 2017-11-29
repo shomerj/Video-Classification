@@ -1,4 +1,4 @@
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, recall_score, precision_score, f1_score
+from sklearn.metrics import classification_report accuracy_score, recall_score, precision_score, f1_score
 from process_data_3d_generator import ProcessData
 from keras.models import load_model
 import numpy as np
@@ -15,6 +15,8 @@ def scores(model, X_test, y_test):
     return (y_pred, classification_report(y_true, y_pred), accuracy_score(y_true, y_pred), recall_score(y_true, y_pred, average=None), precision_score(y_true, y_pred, average=None), f1_score(y_true, y_pred, average=None))
 
 def predict_class(model, X):
+    '''Pass in an individual image to predict classes'''
+
     predict_probability = model.predict_proba(X)
     predict_label = model.predict_classes(X)
     return predict_probability, predict_label
