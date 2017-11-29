@@ -4,10 +4,10 @@ import os.path
 import shutil
 import ipdb
 
-def get_train_test_lists(version='01'):
+def get_train_test_lists(version='03'):
     # Get train and test based on version number
-    test_file = './ucfTrainTestlist/testlist' + version + '.txt'
-    train_file = './ucfTrainTestlist/trainlist' + version + '.txt'
+    test_file = '../ucfTrainTestlist/testlist' + version + '.txt'
+    train_file = '../ucfTrainTestlist/trainlist' + version + '.txt'
 
     # Build the test list.
     with open(test_file) as fin:
@@ -50,7 +50,7 @@ def move_files(file_groups):
             # Move it.
             dest = group + '/' + classname + '/' + filename
             print("Moving %s to %s" % (filename, dest))
-            os.rename('UCF101/'+filename, dest)
+            os.rename('../UCF101/'+filename, dest)
 
     print("Done.")
 

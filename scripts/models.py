@@ -13,7 +13,7 @@ class Models():
         self.seq_len = seq_len
 
         if model == "cnn_lstm":
-            self.input_shape = (self.seq_len, 227,227,1)
+            self.input_shape = (self.seq_len, 200,200,3)
             self.model = self.cnn_lstm()
         elif model == 'c3d':
             self.input_shape = (self.seq_len, 100,100,1)

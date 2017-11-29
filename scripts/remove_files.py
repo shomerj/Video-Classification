@@ -44,7 +44,7 @@ def remove_files():
                             'push_ups': ['PushUps']
                              }
 
-    _set = ['train', 'test']
+    _set = ['train' 'test']
     for s in _set:
         for directory in os.listdir(s):
             if (directory not in classification_dict.keys() and directory != '.DS_Store'):
