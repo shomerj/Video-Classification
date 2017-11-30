@@ -1,4 +1,4 @@
-from sklearn.metrics import classification_report accuracy_score, recall_score, precision_score, f1_score
+from sklearn.metrics import classification_report, accuracy_score, recall_score, precision_score, f1_score
 from process_data_3d_generator import ProcessData
 from keras.models import load_model
 import numpy as np
@@ -24,9 +24,9 @@ def predict_class(model, X):
 
 
 if __name__ == '__main__':
-    test_data = ProcessData(25, (200,200))
-    X_test, y_test = test_data.generate_images_in_memory('test', avg=False, BW=False)
-    img = np.expand_dims(X_test[45], axis=0)
-    model_lrcn = load_model('../lrcn_model.h5')
+    # test_data = ProcessData(25, (200,200))
+    # X_test, y_test = test_data.generate_images_in_memory('test', avg=False, BW=False)
+    # img = np.expand_dims(X_test[6], axis=0)
+    # model_lrcn = load_model('../lrcn_model.h5')
     # y_pred, classification, accuracy, recall, precision, f1 = scores(model_lrcn, X_test, y_test)
-    predict_proba, prediction = predict_class(model_lrcn, img)
+    # predict_proba, prediction = predict_class(model_lrcn, img)

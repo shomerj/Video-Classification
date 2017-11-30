@@ -19,7 +19,6 @@ def plot_image(img, name):
     plt.show()
 
 
-
 def get_activations(model, layer, img):
     '''
     model: neural net model
@@ -51,8 +50,9 @@ def plot_activation(n, img, name, model, layer_idx, frame):
             idx = (n*i)+j
             ax = fig.add_subplot(n, n, idx+1)
             ax.imshow(activated_img[:,:,idx])
+    plt.axis('off')
     plt.savefig('../images/'+name)
-    plt.show()
+    # plt.show()
 
 def plot_activation_multi(n, image, model, frame, name):
     '''
@@ -73,8 +73,9 @@ def plot_activation_multi(n, image, model, frame, name):
             idx = (n*i)+j
             ax = fig.add_subplot(len(layers), n, idx)
             ax.imshow(activated_img[:,:,j*3])
+    plt.axis('off')
     plt.savefig('../images/'+name)
-    plt.show()
+    # plt.show()
 
 
 def truncate_model(model):
@@ -123,7 +124,7 @@ def truncate_model(model):
 
 if __name__ == '__main__':
     #lrcn model
-    model_lrcn = load_model('logs7/checkpoing.hdf5')
+    model_lrcn = load_model('../lrcn_model.h5')
     lrcn_data = ProcessData(seq_len=25, image_shape=(200,200))
     X_test, y_test = lrcn_data.generate_images_in_memory('test', avg=False, BW=False)
     model_truncated = truncate_model(model_lrcn)
@@ -141,3 +142,9 @@ if __name__ == '__main__':
     # activation1 = activations1[0]
     # activated_img1 = activation1[0][10]
     # plot_activation(5, activated_img1)
+
+    # for i in range(0,11,2):
+    #     for j in range(25):
+    #         plot_activation(3, X_test[224], 'throwing'+str(i)+str(j), model_truncated, i, j)
+
+#videos used: 6,9,224,
