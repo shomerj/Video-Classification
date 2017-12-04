@@ -42,7 +42,7 @@ The two models that I trained my model on was a Long-term Recurrent Convolution 
 |Training vs Validation Accuracy| Training vs Validation Loss|
 |---|---|
 |![LRCN_acc](images/final_model_acc.png)|![LCRN_loss](images/final_model_loss.png)
-|![c3d_acc](images/c3d_acc.png)|![c3d_loss](images/c3d_loss.png)
+|![c3d_acc](images/C3D_acc.png)|![C3D_loss](images/C3D_loss.png)
 
 The final model I used to train on my data was LRCN. This model provided a little higher accuracy and better precision, recall and f1 score.
 
