@@ -61,9 +61,9 @@ The training of my models was implemented on the p2.xlarge instance provided by 
 
 <h3>Visualizations</h3>
 These two gifs are visual representations a sequence of 25 images being passed through each convolutional layer
-<br></br>
+
 ![jumping_gif](images/jumping3.gif)
-<br></br>
+
 ![throwing_gif](images/throwing1.gif)
 
 <h3>Next Step</h3>
@@ -73,6 +73,7 @@ My biggest next step is to gather more data. This is very importing in generaliz
 
 
 <h3>References</h3>
+
 - ![Long-term Recurrent Convolutional Networks for Visual Recognition and Description](https://arxiv.org/abs/1411.4389)
 
 - ![Learning Spatiotemporal Features with 3D Convolutional Networks](https://arxiv.org/abs/1412.0767)
