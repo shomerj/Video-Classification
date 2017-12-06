@@ -1,2 +1,0 @@
-#how to copy files to an instance
-scp -i ~/.ssh/dsi_2017_1018.pem individual.py ubuntu@54.172.145.46:~
