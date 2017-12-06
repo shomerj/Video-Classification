@@ -21,35 +21,24 @@ class Models():
 
     def cnn_lstm(self):
         model = Sequential()
-
-        model.add(TimeDistributed(Conv2D(32, (7, 7), strides=(2, 2),
-            activation='relu', padding='same'), input_shape=self.input_shape))
-        model.add(TimeDistributed(Conv2D(32, (3,3),
-            kernel_initializer="he_normal", activation='relu')))
+        model.add(TimeDistributed(Conv2D(32, (7, 7), strides=(2, 2), activation='relu', padding='same'), input_shape=self.input_shape))
+        model.add(TimeDistributed(Conv2D(32, (3,3),kernel_initializer="he_normal", activation='relu')))
         model.add(TimeDistributed(MaxPooling2D((2, 2), strides=(2, 2))))
 
-        model.add(TimeDistributed(Conv2D(64, (3,3),
-            padding='same', activation='relu')))
-        model.add(TimeDistributed(Conv2D(64, (3,3),
-            padding='same', activation='relu')))
+        model.add(TimeDistributed(Conv2D(64, (3,3),padding='same', activation='relu')))
+        model.add(TimeDistributed(Conv2D(64, (3,3),padding='same', activation='relu')))
         model.add(TimeDistributed(MaxPooling2D((2, 2), strides=(2, 2))))
 
-        model.add(TimeDistributed(Conv2D(128, (3,3),
-            padding='same', activation='relu')))
-        model.add(TimeDistributed(Conv2D(128, (3,3),
-            padding='same', activation='relu')))
+        model.add(TimeDistributed(Conv2D(128, (3,3),padding='same', activation='relu')))
+        model.add(TimeDistributed(Conv2D(128, (3,3),padding='same', activation='relu')))
         model.add(TimeDistributed(MaxPooling2D((2, 2), strides=(2, 2))))
 
-        model.add(TimeDistributed(Conv2D(256, (3,3),
-            padding='same', activation='relu')))
-        model.add(TimeDistributed(Conv2D(256, (3,3),
-            padding='same', activation='relu')))
+        model.add(TimeDistributed(Conv2D(256, (3,3),padding='same', activation='relu')))
+        model.add(TimeDistributed(Conv2D(256, (3,3),padding='same', activation='relu')))
         model.add(TimeDistributed(MaxPooling2D((2, 2), strides=(2, 2))))
 
-        model.add(TimeDistributed(Conv2D(512, (3,3),
-            padding='same', activation='relu')))
-        model.add(TimeDistributed(Conv2D(512, (3,3),
-            padding='same', activation='relu')))
+        model.add(TimeDistributed(Conv2D(512, (3,3),padding='same', activation='relu')))
+        model.add(TimeDistributed(Conv2D(512, (3,3), padding='same', activation='relu')))
         model.add(TimeDistributed(MaxPooling2D((2, 2), strides=(2, 2))))
 
         model.add(TimeDistributed(Flatten()))
@@ -68,20 +57,20 @@ class Models():
         model = Sequential()
         # 1st layer group
         model.add(Conv3D(64, (3, 3, 3), activation='relu',
-                         padding='same', name='conv1',
+                         padding='same', name='3d1',
                          strides=(1, 1, 1),
                          input_shape=self.input_shape))
         model.add(MaxPooling3D(pool_size=(1, 2, 2), strides=(1,2,2),
                                padding='valid', name='pool1'))
         # 2nd layer group
         model.add(Conv3D(128, (3, 3, 3), activation='relu',
-                         padding='same', name='conv2',
+                         padding='same', name='3d2',
                          strides=(1, 1, 1)))
         model.add(MaxPooling3D(pool_size=(2, 2, 2), strides=(2, 2, 2),
                                padding='valid', name='pool2'))
         # 3rd layer group
         model.add(Conv3D(256, (3, 3, 3), activation='relu',
-                         padding='same', name='conv3a',
+                         padding='same', name='3d3',
                          strides=(2, 2, 2)))
 
         model.add(MaxPooling3D(pool_size=(4, 4, 4), strides=(2,2,2),
@@ -89,11 +78,11 @@ class Models():
         model.add(Flatten())
 
         # FC layers group
-        model.add(Dense((2048), activation='relu', name='fc4'))
+        model.add(Dense((2048), activation='relu', name='fc1'))
         model.add(Dropout(0.2))
-        model.add(Dense((1024), activation='relu', name='fc5'))
+        model.add(Dense((1024), activation='relu', name='fc2'))
         model.add(Dropout(0.2))
-        model.add(Dense((512), activation='relu', name='fc6'))
+        model.add(Dense((512), activation='relu', name='fc3'))
         model.add(Dropout(0.2))
         model.add(Dense(self.classes, activation='softmax'))
 
