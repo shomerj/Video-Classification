@@ -1,6 +1,6 @@
 <h2>Readme</h2>
 
-<h2> Video Classification of Semi Natural Human Movements </h2>
+<h2> Video Classification of Natural Human Movements </h2>
 
 <h3>Overview</h3>
 
